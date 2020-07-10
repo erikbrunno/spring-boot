@@ -9,3 +9,6 @@ insert into restaurante (nome, taxa_frete, cozinha_id) values ('Liu da carne de 
 insert into estado (nome) values ('Pernambuco');
 insert into estado (nome) values ('Paraíba');
 insert into estado (nome) values ('Sergipe');
+
+insert into cidade (nome, estado_id) values ('Olinda', 1);
+insert into cidade (nome, estado_id) values ('Joao pessoa', 2);
