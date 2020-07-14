@@ -1,5 +1,7 @@
 package com.algaworks.algafood.domain.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,39 +23,31 @@ public class CadastroRestauranteService {
 	public Restaurante salvar(Restaurante restaurante) {
 		
 		Long cozinhaId = restaurante.getCozinha().getId();
-		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
-		
-		if (cozinha == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe no cadastro uma cozinha com id %d", cozinhaId));
-		}
-		
+		Cozinha cozinha = cozinhaRepository.findById(cozinhaId).orElseThrow(() -> new EntidadeNaoEncontradaException(
+				String.format("Não existe no cadastro uma cozinha com id %d", cozinhaId)));
+
 		restaurante.setCozinha(cozinha);
-		
-		return restauranteRepository.salvar(restaurante);
+
+		return restauranteRepository.save(restaurante);
 	}
 	
 	public Restaurante atualizar(Restaurante restaurante) {
 		
-		Restaurante restauranteEncontrado = restauranteRepository.buscar(restaurante.getId());
-		
-		if (restauranteEncontrado == null) {
+		Optional<Restaurante> restauranteEncontrado = restauranteRepository.findById(restaurante.getId());
+					
+		if (restauranteEncontrado.isEmpty()) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe no cadastro um restaurante com id %d", restaurante.getId()));
 		}
 		
 		Long cozinhaId = restaurante.getCozinha().getId();
-		
-		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
-		
-		if (cozinha == null) {
-			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe no cadastro uma cozinha com id %d", cozinhaId));
-		}
-		
+
+		Cozinha cozinha = cozinhaRepository.findById(cozinhaId).orElseThrow(() -> new EntidadeNaoEncontradaException(
+				String.format("Não existe no cadastro uma cozinha com id %d", cozinhaId)));
+
 		restaurante.setCozinha(cozinha);
-		
-		return restauranteRepository.salvar(restaurante);
+
+		return restauranteRepository.save(restaurante);
 	}
 	
 }
