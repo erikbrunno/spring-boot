@@ -14,6 +14,10 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 @Service
 public class CadastroRestauranteService {
 
+	private static final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Não existe no cadastro um restaurante com id %d";
+
+	private static final String MSG_COZINHA_NAO_ENCONTRADA = "Não existe no cadastro uma cozinha com id %d";
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
 	
@@ -24,7 +28,7 @@ public class CadastroRestauranteService {
 		
 		Long cozinhaId = restaurante.getCozinha().getId();
 		Cozinha cozinha = cozinhaRepository.findById(cozinhaId).orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format("Não existe no cadastro uma cozinha com id %d", cozinhaId)));
+				String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
 
 		restaurante.setCozinha(cozinha);
 
@@ -32,22 +36,27 @@ public class CadastroRestauranteService {
 	}
 	
 	public Restaurante atualizar(Restaurante restaurante) {
-		
+
 		Optional<Restaurante> restauranteEncontrado = restauranteRepository.findById(restaurante.getId());
-					
+
 		if (restauranteEncontrado.isEmpty()) {
 			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe no cadastro um restaurante com id %d", restaurante.getId()));
+					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restaurante.getId()));
 		}
-		
+
 		Long cozinhaId = restaurante.getCozinha().getId();
 
-		Cozinha cozinha = cozinhaRepository.findById(cozinhaId).orElseThrow(() -> new EntidadeNaoEncontradaException(
-				String.format("Não existe no cadastro uma cozinha com id %d", cozinhaId)));
+		Cozinha cozinha = cozinhaRepository.findById(cozinhaId).orElseThrow(
+				() -> new EntidadeNaoEncontradaException(String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
 
 		restaurante.setCozinha(cozinha);
 
 		return restauranteRepository.save(restaurante);
+	}
+	
+	public Restaurante buscar(Long restauranteId) {
+		return restauranteRepository.findById(restauranteId).orElseThrow(
+				() -> new EntidadeNaoEncontradaException(String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
 	}
 	
 }

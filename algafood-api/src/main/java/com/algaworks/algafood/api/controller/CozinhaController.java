@@ -70,7 +70,6 @@ public class CozinhaController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long cozinhaId) {
 		cadastroCozinha.excluir(cozinhaId);
-
 	}
 
 }
