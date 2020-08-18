@@ -12,13 +12,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
-import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
-	@ExceptionHandler(EstadoNaoEncontradoException.class)
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
 	public ResponseEntity<?> tratarEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e,
 			WebRequest request) {
 
