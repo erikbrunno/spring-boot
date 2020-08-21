@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -147,6 +149,25 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 				.build();
 		
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		var problemType = ProblemType.DADOS_INVALIDOS;
+		var detail = "Um ou mais campos estão incorretos, faça o preenchimento correto e tente novamente.";
+
+		BindingResult bindingResult = ex.getBindingResult();
+
+		List<Problem.Field> problemFields = bindingResult.getFieldErrors().stream().map(fieldError -> Problem.Field
+				.builder().name(fieldError.getField()).userMessage(fieldError.getDefaultMessage()).build())
+				.collect(Collectors.toList());
+
+		var problem = createProblemBuilder(status, problemType, detail).userMessage(detail).fields(problemFields)
+				.build();
+
+		return handleExceptionInternal(ex, problem, headers, status, request);
 	}
 	
 	private ResponseEntity<Object> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex, HttpHeaders headers,
