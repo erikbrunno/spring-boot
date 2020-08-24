@@ -27,6 +27,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.algaworks.algafood.core.validation.Groups;
+import com.algaworks.algafood.core.validation.Multiplo;
 import com.algaworks.algafood.core.validation.TaxaFrete;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -51,6 +52,7 @@ public class Restaurante {
 	
 //	@DecimalMin("0")
 //	@PositiveOrZero
+	@Multiplo(numero = 5)
 	@TaxaFrete
 	@NotNull
 	@Column(name="taxa_frete", nullable = false)
