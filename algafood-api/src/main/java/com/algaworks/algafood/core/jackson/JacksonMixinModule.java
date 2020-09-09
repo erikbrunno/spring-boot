@@ -13,11 +13,16 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 @Component
 public class JacksonMixinModule extends SimpleModule {
 
+	/*
+	 * Agora que estamos utilizando classes DTO para representar o recurso, esta classe se torna obsoleta.
+	 */
+	
 	private static final long serialVersionUID = 7197240732870772798L;
 	
 
 	public JacksonMixinModule() {
-		setMixInAnnotation(Restaurante.class, RestauranteMixin.class);
+		
+//		setMixInAnnotation(Restaurante.class, RestauranteMixin.class);
 		setMixInAnnotation(Cidade.class, CidadeMixin.class);
 		setMixInAnnotation(Cozinha.class, CozinhaMixin.class);
 	}

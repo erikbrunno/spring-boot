@@ -12,22 +12,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public abstract class RestauranteMixin {
 		
-	@JsonIgnoreProperties(value="titulo", allowGetters = true)
-	private Cozinha cozinha;
+	/*
+	 * Agora que estamos utilizando classes DTO para representar o recurso, esta classe se torna obsoleta.
+	 */
 	
-	@JsonIgnore
-	private Endereco endereco;
-	
+//	@JsonIgnoreProperties(value="titulo", allowGetters = true)
+//	private Cozinha cozinha;
+//	
 //	@JsonIgnore
-	private OffsetDateTime dataCadastro;
-	
+//	private Endereco endereco;
+//	
+////	@JsonIgnore
+//	private OffsetDateTime dataCadastro;
+//	
+////	@JsonIgnore
+//	private OffsetDateTime dataAtualizacao;
+//	
 //	@JsonIgnore
-	private OffsetDateTime dataAtualizacao;
-	
-	@JsonIgnore
-	private List<Produto> produtos;
-	
-	@JsonIgnore
-	private List<FormaPagamento> formasPagamento;
+//	private List<Produto> produtos;
+//	
+//	@JsonIgnore
+//	private List<FormaPagamento> formasPagamento;
 
 }
