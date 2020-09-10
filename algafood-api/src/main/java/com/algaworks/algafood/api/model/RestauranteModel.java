@@ -13,8 +13,16 @@ public class RestauranteModel {
 	
 	private String nome;
 	
-	private BigDecimal taxaFrete;
+	private BigDecimal precoFrete;
 	
 	private CozinhaModel cozinha;
+	
+	/**
+	 * Usei para exemplificar o funcionamento da estratégia de correspondência do model mapper
+	 */
+//	private BigDecimal frete;
+//	private String nomeCozinha;
+//	private String cozinhaNome;
+//	private Long idCozinha;
 	
 }
