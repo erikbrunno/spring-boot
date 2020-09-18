@@ -17,6 +17,10 @@ public class RestauranteModel {
 	
 	private CozinhaModel cozinha;
 	
+	private Boolean ativo;
+	
+	private EnderecoModel endereco;
+	
 	/**
 	 * Usei para exemplificar o funcionamento da estratégia de correspondência do model mapper
 	 */
