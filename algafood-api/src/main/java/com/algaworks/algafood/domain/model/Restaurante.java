@@ -3,6 +3,7 @@ package com.algaworks.algafood.domain.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -94,6 +95,12 @@ public class Restaurante {
 			inverseJoinColumns = @JoinColumn(name="forma_pagamento_id"))
 	private Set<FormaPagamento> formasPagamento = new HashSet<FormaPagamento>();
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "restaurante_usuario_responsavel", 
+			joinColumns = @JoinColumn(name = "restaurante_id"), 
+			inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+	private Set<Usuario> responsaveis = new HashSet<Usuario>();
+	
 	public void ativar() {
 		setAtivo(true);
 	}
@@ -116,6 +123,14 @@ public class Restaurante {
 	
 	public boolean adicionarFormaPagamento(FormaPagamento formaPagamento) {
 		return getFormasPagamento().add(formaPagamento);
+	}
+	
+	public void removerResponsavel(Usuario responsavel) {
+		getResponsaveis().remove(responsavel);
+	}
+	
+	public void adicionarResponsavel(Usuario responsavel) {
+		getResponsaveis().add(responsavel);
 	}
 	
 }
