@@ -51,30 +51,30 @@ public class PedidoController {
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
     
-	@GetMapping
-	public MappingJacksonValue listar(@RequestParam(required = false) String campos) {
-		List<Pedido> todosPedidos = pedidoRepository.findAll();
-		List<PedidoResumoModel> pedidosModel = pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
-
-		MappingJacksonValue pedidosWrapper = new MappingJacksonValue(pedidosModel);
-
-		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
-		filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.serializeAll());
-
-		if (StringUtils.isNotBlank(campos)) {
-			filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.filterOutAllExcept(campos.split(",")));
-		}
-		
-		pedidosWrapper.setFilters(filterProvider);
-
-		return pedidosWrapper;
-	}
+//	@GetMapping
+//	public MappingJacksonValue listar(@RequestParam(required = false) String campos) {
+//		List<Pedido> todosPedidos = pedidoRepository.findAll();
+//		List<PedidoResumoModel> pedidosModel = pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
+//
+//		MappingJacksonValue pedidosWrapper = new MappingJacksonValue(pedidosModel);
+//
+//		SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+//		filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.serializeAll());
+//
+//		if (StringUtils.isNotBlank(campos)) {
+//			filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.filterOutAllExcept(campos.split(",")));
+//		}
+//		
+//		pedidosWrapper.setFilters(filterProvider);
+//
+//		return pedidosWrapper;
+//	}
     
-//    @GetMapping
-//    public List<PedidoResumoModel> listar() {
-//        List<Pedido> todosPedidos = pedidoRepository.findAll();
-//        return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
-//    }
+    @GetMapping
+    public List<PedidoResumoModel> listar() {
+        List<Pedido> todosPedidos = pedidoRepository.findAll();
+        return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
+    }
     
     @GetMapping("/{codigoPedido}")
     public PedidoModel buscar(@PathVariable String codigoPedido) {
