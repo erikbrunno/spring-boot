@@ -13,9 +13,12 @@ public class PedidoSpecs {
 
 	public static Specification<Pedido> usandoFiltro(PedidoFilter filtro) {
 		return (root, query, builder) -> {
+			
 			// Resolve o problema do N + 1
-			root.fetch("restaurante");
-			root.fetch("cliente");
+			if(Pedido.class.equals(query.getResultType())) {				
+				root.fetch("restaurante");
+				root.fetch("cliente");
+			}
 			
 			var predicates = new ArrayList<Predicate>();
 			
