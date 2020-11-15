@@ -10,7 +10,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.algaworks.algafood.domain.model.Restaurante;
-import com.algaworks.algafood.infraestructure.repository.RestauranteRepositoryQueries;
 
 @Repository
 public interface RestauranteRepository

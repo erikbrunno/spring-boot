@@ -22,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
+import com.algaworks.algafood.domain.repository.RestauranteRepositoryQueries;
 
 @Repository
 public class RestauranteRepositoryImpl  implements RestauranteRepositoryQueries {
