@@ -1,7 +1,5 @@
 package com.algaworks.algafood.infraestructure.service.email;
 
-import java.io.IOException;
-
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +45,7 @@ public class SmtpEnvioEmailService implements EnvioEmailService {
 		}
 	}
 	
-	private String processarTemplate(Mensagem mensagem) {
+	protected String processarTemplate(Mensagem mensagem) {
 		try {
 			Template template = freeMarkerConfig.getTemplate(mensagem.getCorpo());
 			return FreeMarkerTemplateUtils.processTemplateIntoString(template, mensagem.getVariaveis());
