@@ -14,8 +14,10 @@ import com.algaworks.algafood.domain.service.EnvioEmailService;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class SmtpEnvioEmailService implements EnvioEmailService {
 
 	@Autowired
@@ -33,6 +35,7 @@ public class SmtpEnvioEmailService implements EnvioEmailService {
 			MimeMessage mimeMessage = criarMimeMessage(mensagem);
 			
 			mailSender.send(mimeMessage);
+			log.info("Email enviado com sucesso");
 		} catch (Exception e) {
 			throw new EmailException("Não foi possível enviar email", e);
 		}

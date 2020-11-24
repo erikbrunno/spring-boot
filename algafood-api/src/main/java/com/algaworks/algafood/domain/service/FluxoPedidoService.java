@@ -22,12 +22,16 @@ public class FluxoPedidoService {
 		pedido.confirmar();
 		
 		pedidoRepository.save(pedido);
+		pedidoRepository.flush();
 	}
 
 	@Transactional
 	public void cancelar(String codigoPedido) {
 		Pedido pedido = emissaoPedido.buscar(codigoPedido);
 		pedido.cancelar();
+		
+		pedidoRepository.save(pedido);
+		pedidoRepository.flush();
 	}
 
 	@Transactional
