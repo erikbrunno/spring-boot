@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.algaworks.algafood.api.exceptionhandler.Problem;
+import com.fasterxml.classmate.TypeResolver;
 import com.google.common.base.Predicates;
 
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
@@ -18,6 +20,7 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.ResponseMessage;
@@ -33,6 +36,8 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 
 	@Bean
 	public Docket apiDocket() {
+		var typeResolver = new TypeResolver();
+		
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 					.apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
@@ -45,7 +50,8 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				.globalResponseMessage(RequestMethod.POST, globalPostPutResponseMessages())
 	            .globalResponseMessage(RequestMethod.PUT, globalPostPutResponseMessages())
 	            .globalResponseMessage(RequestMethod.DELETE, globalDeleteResponseMessages())
-				.apiInfo(apiInfo())
+				.additionalModels(typeResolver.resolve(Problem.class))
+	            .apiInfo(apiInfo())
 				.tags(new Tag("Cidades", "Gerenciar cidades"));
 	}
 	
@@ -54,6 +60,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				new ResponseMessageBuilder()
 					.code(HttpStatus.INTERNAL_SERVER_ERROR.value())
 					.message("Erro interno do servidor")
+					.responseModel(new ModelRef("Problema"))
 					.build(),
 				new ResponseMessageBuilder()
 					.code(HttpStatus.NOT_ACCEPTABLE.value())
@@ -68,10 +75,12 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	            new ResponseMessageBuilder()
 	                .code(HttpStatus.BAD_REQUEST.value())
 	                .message("Requisição inválida (erro do cliente)")
+	                .responseModel(new ModelRef("Problema"))
 	                .build(),
 	            new ResponseMessageBuilder()
 	                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
 	                .message("Erro interno no servidor")
+	                .responseModel(new ModelRef("Problema"))
 	                .build(),
 	            new ResponseMessageBuilder()
 	                .code(HttpStatus.NOT_ACCEPTABLE.value())
@@ -80,6 +89,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	            new ResponseMessageBuilder()
 	                .code(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value())
 	                .message("Requisição recusada porque o corpo está em um formato não suportado")
+	                .responseModel(new ModelRef("Problema"))
 	                .build()
 	        );
 	}
@@ -89,10 +99,12 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	            new ResponseMessageBuilder()
 	                .code(HttpStatus.BAD_REQUEST.value())
 	                .message("Requisição inválida (erro do cliente)")
+	                .responseModel(new ModelRef("Problema"))
 	                .build(),
 	            new ResponseMessageBuilder()
 	                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
 	                .message("Erro interno no servidor")
+	                .responseModel(new ModelRef("Problema"))
 	                .build()
 	        );
 	}
