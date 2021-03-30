@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.api.assembler.CidadeInputDisassembler;
 import com.algaworks.algafood.api.assembler.CidadeModelAssembler;
+import com.algaworks.algafood.api.controller.openapi.CidadeControllerOpenApi;
 import com.algaworks.algafood.api.model.CidadeModel;
 import com.algaworks.algafood.api.model.input.CidadeInput;
 import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
@@ -26,14 +27,10 @@ import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.service.CadastroCidadeService;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 
-@Api(tags = "Cidades")
 @RestController
 @RequestMapping("/cidades")
-public class CidadeController {
+public class CidadeController implements CidadeControllerOpenApi{
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
@@ -47,25 +44,22 @@ public class CidadeController {
 	@Autowired
 	private CidadeInputDisassembler cidadeInputDisassembler;
 	
-	@ApiOperation("Lista de cidades")
 	@GetMapping
 	public List<CidadeModel> listar() {
 		List<Cidade> todasCidades =  cidadeRepository.findAll();
 		return cidadeModelAssembler.toCollectionModel(todasCidades);
 	}
 
-	@ApiOperation("Busca uma cidade por ID")
+
 	@GetMapping("/{cidadeId}")
-	public CidadeModel buscar(@ApiParam(value = "ID de uma cidade", example = "1") @PathVariable Long cidadeId) {
+	public CidadeModel buscar(@PathVariable Long cidadeId) {
 		Cidade cidadeEncontrada = cadastroCidadeService.buscar(cidadeId);
 		return cidadeModelAssembler.toModel(cidadeEncontrada);
 	}
 
-	@ApiOperation("Adiciona uma cidade por ID")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public CidadeModel adicionar(@ApiParam(name = "corpo", value = "Representação de uma nova cidade") 
-			@RequestBody @Valid CidadeInput cidadeInput) {
+	public CidadeModel adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
 		try {
 			
 			Cidade cidade = cidadeInputDisassembler.toDomainObject(cidadeInput);
@@ -76,11 +70,8 @@ public class CidadeController {
 		}
 	}
 
-	@ApiOperation("Altera uma cidade por ID")
 	@PutMapping("/{cidadeId}")
-	public CidadeModel atualizar(@ApiParam(value="ID de uma cidade", example = "1") @PathVariable Long cidadeId, 
-			@ApiParam(name = "corpo", value = "Representação de uma cidade com novas informações") @Valid @RequestBody CidadeInput cidadeInput) {
-		
+	public CidadeModel atualizar(@PathVariable Long cidadeId, @Valid @RequestBody CidadeInput cidadeInput) {
 		try {
 			Cidade cidadeAtual = cadastroCidadeService.buscar(cidadeId);
 			cidadeInputDisassembler.copyToDomainObject(cidadeInput, cidadeAtual);
@@ -91,10 +82,9 @@ public class CidadeController {
 		}
 	}
 
-	@ApiOperation("Exclui uma cidade por ID")
 	@DeleteMapping("/{cozinhaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void remover(@ApiParam(value="ID de uma cidade", example = "1") @PathVariable Long cozinhaId) {
+	public void remover(@PathVariable Long cozinhaId) {
 		cadastroCidadeService.excluir(cozinhaId);
 	}
 }
