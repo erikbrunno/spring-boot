@@ -23,6 +23,7 @@ import com.google.common.base.Predicates;
 
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
@@ -52,6 +53,14 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 					.build()
 				//Desabilita o status code da faixa 400 quando for escanear
 				.useDefaultResponseMessages(false)
+				.globalOperationParameters(Arrays.asList(
+						new ParameterBuilder()
+						.name("campos")
+						.description("Nomes das propriedades para filtrar na resposta, separados por vírgula")
+						.parameterType("query")
+						.modelRef(new ModelRef("string"))
+						.build()
+						))
 				//configura os status globalmente pra cada endpoint, nele informamos quais código e sua descricao
 				.globalResponseMessage(RequestMethod.GET, globalGetResponseMessages())
 				.globalResponseMessage(RequestMethod.POST, globalPostPutResponseMessages())
