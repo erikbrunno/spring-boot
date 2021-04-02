@@ -51,16 +51,19 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 					.apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
 //					.paths(PathSelectors.ant("/restaurantes/*"))
 					.build()
+				
 				//Desabilita o status code da faixa 400 quando for escanear
 				.useDefaultResponseMessages(false)
-				.globalOperationParameters(Arrays.asList(
-						new ParameterBuilder()
-						.name("campos")
-						.description("Nomes das propriedades para filtrar na resposta, separados por vírgula")
-						.parameterType("query")
-						.modelRef(new ModelRef("string"))
-						.build()
-						))
+				
+				//adiciona parametos globais para todos endpoint da api de documentacao
+//				.globalOperationParameters(Arrays.asList(
+//						new ParameterBuilder()
+//						.name("campos")
+//						.description("Nomes das propriedades para filtrar na resposta, separados por vírgula")
+//						.parameterType("query")
+//						.modelRef(new ModelRef("string"))
+//						.build()
+//						))
 				//configura os status globalmente pra cada endpoint, nele informamos quais código e sua descricao
 				.globalResponseMessage(RequestMethod.GET, globalGetResponseMessages())
 				.globalResponseMessage(RequestMethod.POST, globalPostPutResponseMessages())
