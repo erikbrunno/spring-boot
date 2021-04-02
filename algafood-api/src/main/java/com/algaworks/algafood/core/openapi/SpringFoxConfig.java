@@ -16,8 +16,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.CozinhaModel;
+import com.algaworks.algafood.api.model.PedidoResumoModel;
 import com.algaworks.algafood.api.openapi.model.CozinhasModelOpenApi;
 import com.algaworks.algafood.api.openapi.model.PageableModelOpenApi;
+import com.algaworks.algafood.api.openapi.model.PedidosResumoModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.google.common.base.Predicates;
 
@@ -72,15 +74,18 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	            .ignoredParameterTypes(ServletWebRequest.class)
 				.additionalModels(typeResolver.resolve(Problem.class))
 				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
-	            .alternateTypeRules(AlternateTypeRules.newRule(
-	            			typeResolver.resolve(Page.class, CozinhaModel.class), 
-	            			CozinhasModelOpenApi.class)
+	            .alternateTypeRules(
+	            		AlternateTypeRules.newRule(typeResolver.resolve(Page.class, CozinhaModel.class), 
+	            			CozinhasModelOpenApi.class),
+	            		AlternateTypeRules.newRule(typeResolver.resolve(Page.class, PedidoResumoModel.class), 
+	            				PedidosResumoModelOpenApi.class)
 	            )
 				.apiInfo(apiInfo())
 				.tags(new Tag("Cidades", "Gerenciar cidades"),
 						new Tag("Grupos", "Gerenciar grupos"),
 						new Tag("Cozinhas", "Gerenciar cozinhas"),
-						new Tag("FormaPagamento", "Gerenciar formas de pagamento"));
+						new Tag("FormaPagamento", "Gerenciar formas de pagamento"),
+						new Tag("Pedidos", "Gerenciar pedidos"));
 	}
 	
 	private List<ResponseMessage> globalGetResponseMessages() {

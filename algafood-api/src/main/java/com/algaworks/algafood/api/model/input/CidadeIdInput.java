@@ -4,6 +4,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.sun.istack.NotNull;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Setter
 public class CidadeIdInput {
 
+	@ApiModelProperty(value = "ID da cidade", example = "1")
 	@NotNull
 	private Long id;
 
