@@ -49,10 +49,10 @@ public interface RestauranteControllerOpenApi {
 			RestauranteInput restauranteInput);
 	
 	@ApiOperation("Ativa um restaurante por ID")
-	public void ativar(@ApiParam(value="ID de um restaurante", example = "1") Long restauranteId);
+	public void ativar(@ApiParam(value="ID de um restaurante", example = "1", required = true) Long restauranteId);
 	
 	@ApiOperation("Inativa um restaurante por ID")
-	public void inativar(@ApiParam(value="ID de um restaurante", example = "1") Long restauranteId);
+	public void inativar(@ApiParam(value="ID de um restaurante", example = "1", required = true) Long restauranteId);
 	
 	@ApiOperation("Ativa varios restaurante passando os IDs")
 	public void ativarEmLote(List<Long> restaurantesIds);
@@ -61,9 +61,9 @@ public interface RestauranteControllerOpenApi {
 	public void inativarEmLote(List<Long> restaurantesIds);
 	
 	@ApiOperation("Abre um restaurante por id")
-	public void abrir(@ApiParam(value="ID de um restaurante", example = "1") Long restauranteId);
+	public void abrir(@ApiParam(value="ID de um restaurante", example = "1", required = true) Long restauranteId);
 	
 	@ApiOperation("Fecha um restaurante por id")
-	public void fechar(@ApiParam(value="ID de um restaurante", example = "1") Long restauranteId);
+	public void fechar(@ApiParam(value="ID de um restaurante", example = "1", required = true) Long restauranteId);
 
 }

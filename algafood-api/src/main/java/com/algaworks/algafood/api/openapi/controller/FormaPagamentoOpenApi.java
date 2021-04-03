@@ -30,13 +30,13 @@ public interface FormaPagamentoOpenApi {
 	
 	@ApiOperation("Altera uma forma de pagamento")
 	public FormaPagamentoModel atualizar(
-			@ApiParam(value="ID da forma de pagamento", example = "1")
+			@ApiParam(value="ID da forma de pagamento", example = "1", required = true)
 			Long formaPagamentoId,
 			
 			@ApiParam(name="corpo", value = "Representação de uma forma de pagamento com novas informações")
 			FormaPagamentoInput formaPagamentoInput);	
 	
 	@ApiOperation("Remove uma forma de pagamento")
-	public void remover(@ApiParam(value="ID da forma de pagamento", example = "1") Long formaPagamentoId);
+	public void remover(@ApiParam(value="ID da forma de pagamento", example = "1", required = true) Long formaPagamentoId);
 	
 }

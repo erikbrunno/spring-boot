@@ -35,13 +35,13 @@ public interface CozinhaControllerOpenApi {
 	
 	@ApiOperation("Atualiza uma cozinha por ID")
 	public CozinhaModel atualizar(
-			@ApiParam(value = "ID de uma cozinha", example = "1") 
+			@ApiParam(value = "ID de uma cozinha", example = "1", required = true) 
 			Long cozinhaId,
 			
 			@ApiParam(name = "corpo", value = "Representação de uma cozinha com novas informações")
 			CozinhaInput cozinhaInput);	
 
-	@ApiOperation("Remove uma cozinha por ID")
-	public void remover(Long cozinhaId);
+	@ApiOperation(value = "Remove uma cozinha por ID")
+	public void remover(@ApiParam(value = "ID de uma cozinha", example = "1") Long cozinhaId);
 	
 }

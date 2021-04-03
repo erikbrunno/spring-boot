@@ -29,9 +29,9 @@ public interface CidadeControllerOpenApi {
 			@ApiParam(name = "corpo", value = "Representação de uma nova cidade") CidadeInput cidadeInput);
 
 	@ApiOperation("Altera uma cidade por ID")
-	public CidadeModel atualizar(@ApiParam(value = "ID de uma cidade", example = "1") Long cidadeId,
+	public CidadeModel atualizar(@ApiParam(value = "ID de uma cidade", example = "1", required = true) Long cidadeId,
 			@ApiParam(name = "corpo", value = "Representação de uma cidade com novas informações") CidadeInput cidadeInput);
 
 	@ApiOperation("Exclui uma cidade por ID")
-	public void remover(@ApiParam(value = "ID de uma cidade", example = "1") Long cozinhaId);
+	public void remover(@ApiParam(value = "ID de uma cidade", example = "1", required = true) Long cozinhaId);
 }
