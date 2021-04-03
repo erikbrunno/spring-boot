@@ -24,9 +24,14 @@ public interface EstadosControllerOpenApi {
 	@ApiOperation("Busca um Estado por ID")
 	public EstadoModel buscar(@ApiParam(value = "ID de um Estado", example = "1", required = true) Long estadoId);
 	
+	@ApiResponses({
+	    @ApiResponse(code = 201, message = "Estado cadastrado")})
 	@ApiOperation("Adiciona um novo Estado")
 	public EstadoModel adicionar(@ApiParam(name = "corpo", value = "Representação de um novo Estado") EstadoInput estadoInput);
 	
+	@ApiResponses({
+	    @ApiResponse(code = 200, message = "Estado atualizado"),
+	    @ApiResponse(code = 404, message = "Estado não encontrado", response = Problem.class)})
 	@ApiOperation("Atualiza um Estado por ID")
 	public EstadoModel atualizar(
 			@ApiParam(value = "ID de um Estado", example = "1", required = true) 
@@ -35,6 +40,9 @@ public interface EstadosControllerOpenApi {
 			@ApiParam(name = "corpo", value = "Representação de um Estado com novas informações")
 			EstadoInput estadoInput);
 	
+	@ApiResponses({ 
+		@ApiResponse(code = 204, message = "Estado excluído"),
+		@ApiResponse(code = 404, message = "Estado não encontrado", response = Problem.class) })
 	@ApiOperation("Remove um Estado por ID")
 	public void remover(@ApiParam(value = "ID de um Estado", example = "1", required = true) Long estadoId);
 	
