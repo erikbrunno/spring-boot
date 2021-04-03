@@ -22,7 +22,7 @@ public interface GrupoControllerOpenApi {
 		@ApiResponse(code = 400, message = "ID do grupo inválido", response = Problem.class),
 		@ApiResponse(code = 404, message = "Grupo não encontrado", response = Problem.class) })
 	@ApiOperation("Busca grupo por ID")
-	public GrupoModel buscar(@ApiParam(value = "ID de um grupo", example = "1") Long grupoId);	
+	public GrupoModel buscar(@ApiParam(value = "ID de um grupo", example = "1", required = true) Long grupoId);	
 
 	@ApiOperation("Adiciona um novo grupo")
 	public GrupoModel adicionar(

@@ -31,7 +31,7 @@ public interface PedidoControllerOpenApi {
 		@ApiResponse(code = 400, message = "Codigo do pedido inválido", response = Problem.class),
 		@ApiResponse(code = 404, message = "Codico do pedido não encontrado", response = Problem.class) })
 	@ApiOperation("Busca um pedido pelo codigo")
-	public PedidoModel buscar(@ApiParam(value="Codigo do pedido", example= "f9981ca4-5a5e-4da3-af04-933861df3e55") String codigoPedido);
+	public PedidoModel buscar(@ApiParam(value="Codigo do pedido", example= "f9981ca4-5a5e-4da3-af04-933861df3e55", required = true) String codigoPedido);
 
 	@ApiOperation(value="")
 	public PedidoModel adicionar(@ApiParam(name = "corpo", value="Representação de um novo pedido") PedidoInput pedidoInput);

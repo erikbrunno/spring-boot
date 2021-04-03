@@ -22,7 +22,7 @@ public interface CidadeControllerOpenApi {
 			@ApiResponse(code = 400, message = "ID da cidade inválido", response = Problem.class),
 			@ApiResponse(code = 404, message = "Cidade não encontrada", response = Problem.class) })
 	@ApiOperation("Busca uma cidade por ID")
-	public CidadeModel buscar(@ApiParam(value = "ID de uma cidade", example = "1") Long cidadeId);
+	public CidadeModel buscar(@ApiParam(value = "ID de uma cidade", example = "1", required = true) Long cidadeId);
 
 	@ApiOperation("Adiciona uma cidade por ID")
 	public CidadeModel adicionar(

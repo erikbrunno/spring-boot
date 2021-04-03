@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import com.algaworks.algafood.api.model.view.RestauranteView;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,22 +13,29 @@ import lombok.Setter;
 @Setter
 public class RestauranteModel {
 
+	@ApiModelProperty(value = "ID  do restaurante", example = "1")
 	@JsonView({RestauranteView.Resumo.class,  RestauranteView.ApenasNome.class})
 	private Long id;
 	
+	@ApiModelProperty(value = "Nome  do restaurante", example = "Restaurante bom demais")
 	@JsonView({RestauranteView.Resumo.class, RestauranteView.ApenasNome.class})
 	private String nome;
 	
+	@ApiModelProperty(value = "Preço frete  do restaurante", example = "10")
 	@JsonView(RestauranteView.Resumo.class)
 	private BigDecimal precoFrete;
 	
+	@ApiModelProperty(value = "Cozinha do restaurante")
 	@JsonView(RestauranteView.Resumo.class)
 	private CozinhaModel cozinha;
 	
+	@ApiModelProperty(example = "true")
 	private Boolean ativo;
 	
+	@ApiModelProperty(example = "true")
 	private Boolean aberto;
 	
+	@ApiModelProperty(value = "Enderedo do restaurante")
 	private EnderecoModel endereco;
 	
 	/**

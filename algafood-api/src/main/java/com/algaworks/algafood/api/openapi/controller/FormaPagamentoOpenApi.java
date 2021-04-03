@@ -22,7 +22,7 @@ public interface FormaPagamentoOpenApi {
 		@ApiResponse(code = 400, message = "ID da forma de pagamento inválido", response = Problem.class),
 		@ApiResponse(code = 404, message = "Forma de pagamento não encontrada", response = Problem.class) })
 	@ApiOperation("Busca uma forma de pagamento por ID")
-	public FormaPagamentoModel buscar(@ApiParam(value = "ID da forma de pagamento", example = "1") Long formaPagamentoId);
+	public FormaPagamentoModel buscar(@ApiParam(value = "ID da forma de pagamento", example = "1", required = true) Long formaPagamentoId);
 	
 	@ApiOperation("Adiciona uma forma de pagamento")
 	public FormaPagamentoModel adicionar(
