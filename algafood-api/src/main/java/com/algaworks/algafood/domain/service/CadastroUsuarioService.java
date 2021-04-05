@@ -70,7 +70,7 @@ public class CadastroUsuarioService {
 	public void desassociarGrupo(Long usuarioId, Long grupoId) {
 		Usuario usuario = buscar(usuarioId);
 		Grupo grupo = cadastroGrupo.buscar(grupoId);
-		usuario.adicionarGrupo(grupo);
+		usuario.removerGrupo(grupo);
 	}
 	
 	@Transactional
