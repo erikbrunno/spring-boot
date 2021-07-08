@@ -2,6 +2,8 @@ package com.algaworks.algafood.api.openapi.controller;
 
 import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
+
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.EstadoModel;
 import com.algaworks.algafood.api.model.input.EstadoInput;
@@ -16,7 +18,7 @@ import io.swagger.annotations.ApiResponses;
 public interface EstadosControllerOpenApi {
 
 	@ApiOperation("Lista de Estados")
-	public List<EstadoModel> listar();
+	public CollectionModel<EstadoModel> listar();
 	
 	@ApiResponses({ 
 		@ApiResponse(code = 400, message = "ID da cidade inválido", response = Problem.class),
