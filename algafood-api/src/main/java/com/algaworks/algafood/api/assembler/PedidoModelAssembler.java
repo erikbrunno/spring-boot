@@ -36,27 +36,21 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
         PedidoModel pedidoModel = createModelWithId(pedido.getId(), pedido);
         modelMapper.map(pedido, pedidoModel);
         
-        pedidoModel.add(algaLinks.linkToPedido());
+        pedidoModel.add(algaLinks.linkToPedidos());
+
+        pedidoModel.getRestaurante().add(algaLinks.linkToRestaurante(pedidoModel.getRestaurante().getId()));
+        pedidoModel.getRestaurante().add(algaLinks.linkToRestaurantes());
         
-        pedidoModel.getRestaurante().add(linkTo(methodOn(RestauranteController.class).buscar(pedido.getRestaurante().getId()))
-        		.withSelfRel());
-        pedidoModel.getRestaurante().add(linkTo(methodOn(RestauranteController.class).listar()).withSelfRel());
+        pedidoModel.getCliente().add(algaLinks.linkToUsuario(pedidoModel.getCliente().getId()));
         
-        pedidoModel.getCliente().add(linkTo(methodOn(UsuarioController.class).buscar(pedido.getCliente().getId()))
-        		.withSelfRel());
+        pedidoModel.getFormaPagamento().add(algaLinks.linkToFormaPagamento(pedidoModel.getFormaPagamento().getId()));
+        pedidoModel.getFormaPagamento().add(algaLinks.linkToFormasPagamento());
         
-        pedidoModel.getFormaPagamento().add(linkTo(methodOn(FormaPagamentoController.class).buscar(pedidoModel.getFormaPagamento().getId()))
-        		.withSelfRel());
-        pedidoModel.getFormaPagamento().add(linkTo(methodOn(FormaPagamentoController.class).listar()).withSelfRel());
-        
-        pedidoModel.getEnderecoEntrega().getCidade().add(linkTo(methodOn(CidadeController.class).buscar(pedidoModel.getEnderecoEntrega().getCidade().getId()))
-        		.withSelfRel());
-        pedidoModel.getEnderecoEntrega().getCidade().add(linkTo(methodOn(CidadeController.class).listar()).withSelfRel());
+        pedidoModel.getEnderecoEntrega().getCidade().add(algaLinks.linkToCidade(pedidoModel.getEnderecoEntrega().getCidade().getId()));
+        pedidoModel.getEnderecoEntrega().getCidade().add(algaLinks.linkToCidades());
         
         pedidoModel.getItens().forEach(item -> {
-            item.add(linkTo(methodOn(RestauranteProdutoController.class)
-                    .buscar(pedidoModel.getRestaurante().getId(), item.getProdutoId()))
-                    .withRel("produto"));
+            item.add(algaLinks.linkToProduto(pedidoModel.getRestaurante().getId(), item.getProdutoId()));
         });
         
         return pedidoModel;
