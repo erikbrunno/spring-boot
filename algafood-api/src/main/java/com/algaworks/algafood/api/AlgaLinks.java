@@ -6,17 +6,20 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.TemplateVariable;
+import org.springframework.hateoas.TemplateVariable.VariableType;
 import org.springframework.hateoas.TemplateVariables;
 import org.springframework.hateoas.UriTemplate;
-import org.springframework.hateoas.TemplateVariable.VariableType;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.api.controller.CidadeController;
+import com.algaworks.algafood.api.controller.CozinhaController;
+import com.algaworks.algafood.api.controller.EstadoController;
 import com.algaworks.algafood.api.controller.FluxoPedidoController;
 import com.algaworks.algafood.api.controller.FormaPagamentoController;
 import com.algaworks.algafood.api.controller.PedidoController;
 import com.algaworks.algafood.api.controller.RestauranteController;
 import com.algaworks.algafood.api.controller.RestauranteProdutoController;
+import com.algaworks.algafood.api.controller.RestauranteResponsavelController;
 import com.algaworks.algafood.api.controller.UsuarioController;
 
 @Component
@@ -55,6 +58,10 @@ public class AlgaLinks {
 	
 	public Link linkToUsuario(Long id, String rel) {
 		return linkTo(methodOn(UsuarioController.class).buscar(id)).withRel(rel);
+	}
+	
+	public Link linkToUsuarios() {
+		return linkTo(UsuarioController.class).withRel("usuarios");
 	}
 	
 	public Link linkToFormaPagamento(Long id) {
@@ -99,6 +106,26 @@ public class AlgaLinks {
 	
 	public Link linkToCancelarPedido(String codigoPedido, String rel) {
 		return linkTo(methodOn(FluxoPedidoController.class).cancelar(codigoPedido)).withRel(rel);
+	}
+	
+	public Link linkToEstado(Long id) {
+		return linkToEstado(id, IanaLinkRelations.SELF.value());
+	}
+	
+	public Link linkToEstado(Long id, String rel) {
+		return linkTo(methodOn(EstadoController.class).buscar(id)).withRel(rel);
+	}
+	
+	public Link linkToEstados() {
+		return linkTo(EstadoController.class).withRel("estados");
+	}
+	
+	public Link linkToCozinhas() {
+		return linkTo(CozinhaController.class).withRel("cozinhas");
+	}
+	
+	public Link linkToRestauranteResponsavel (long restauranteId) {
+		return linkTo(methodOn(RestauranteResponsavelController.class).listar(restauranteId)).withSelfRel();
 	}
 }
 
