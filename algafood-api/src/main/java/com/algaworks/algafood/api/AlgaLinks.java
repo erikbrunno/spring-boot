@@ -12,6 +12,7 @@ import org.springframework.hateoas.TemplateVariable.VariableType;
 import org.springframework.stereotype.Component;
 
 import com.algaworks.algafood.api.controller.CidadeController;
+import com.algaworks.algafood.api.controller.FluxoPedidoController;
 import com.algaworks.algafood.api.controller.FormaPagamentoController;
 import com.algaworks.algafood.api.controller.PedidoController;
 import com.algaworks.algafood.api.controller.RestauranteController;
@@ -86,4 +87,20 @@ public class AlgaLinks {
 	
 	public Link linkToProduto(Long restauranteId, Long produtoId, String rel) {
 		return linkTo(methodOn(RestauranteProdutoController.class).buscar(restauranteId, produtoId)).withRel(rel);
-	}}
+	}
+	
+	public Link linkToConfirmacaoPedido(String codigoPedido, String rel) {
+		return linkTo(methodOn(FluxoPedidoController.class).confirmar(codigoPedido)).withRel(rel);
+	}
+	
+	public Link linkToEntregarPedido(String codigoPedido, String rel) {
+		return linkTo(methodOn(FluxoPedidoController.class).entregar(codigoPedido)).withRel(rel);
+	}
+	
+	public Link linkToCancelarPedido(String codigoPedido, String rel) {
+		return linkTo(methodOn(FluxoPedidoController.class).cancelar(codigoPedido)).withRel(rel);
+	}
+}
+
+
+
