@@ -4,6 +4,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.hateoas.IanaRels;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.TemplateVariable;
 import org.springframework.hateoas.TemplateVariable.VariableType;
@@ -18,6 +19,7 @@ import com.algaworks.algafood.api.controller.FluxoPedidoController;
 import com.algaworks.algafood.api.controller.FormaPagamentoController;
 import com.algaworks.algafood.api.controller.PedidoController;
 import com.algaworks.algafood.api.controller.RestauranteController;
+import com.algaworks.algafood.api.controller.RestauranteFormaPagamentoController;
 import com.algaworks.algafood.api.controller.RestauranteProdutoController;
 import com.algaworks.algafood.api.controller.RestauranteResponsavelController;
 import com.algaworks.algafood.api.controller.UsuarioController;
@@ -120,12 +122,25 @@ public class AlgaLinks {
 		return linkTo(EstadoController.class).withRel("estados");
 	}
 	
+	public Link linkToCozinha(Long id) {
+		return linkToCozinha(id, IanaLinkRelations.SELF.value());
+	}
+	
+	public Link linkToCozinha(Long id, String rel) {
+		return linkTo(methodOn(CozinhaController.class).buscar(id)).withRel(rel);
+	}
+	
 	public Link linkToCozinhas() {
 		return linkTo(CozinhaController.class).withRel("cozinhas");
 	}
 	
 	public Link linkToRestauranteResponsavel (long restauranteId) {
 		return linkTo(methodOn(RestauranteResponsavelController.class).listar(restauranteId)).withSelfRel();
+	}
+	
+	public Link linkToRestauranteFormasPagamento(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteFormaPagamentoController.class)
+	            .listar(restauranteId)).withRel(rel);
 	}
 }
 
