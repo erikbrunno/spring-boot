@@ -1,6 +1,6 @@
 package com.algaworks.algafood.api.openapi.controller;
 
-import java.util.List;
+import org.springframework.hateoas.CollectionModel;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.GrupoModel;
@@ -18,7 +18,7 @@ public interface UsuarioGrupoControllerOpenApi {
         @ApiResponse(code = 404, message = "Usuário não encontrado", response = Problem.class)
     })
 	@ApiOperation("Lista os grupos pertencentes a um usuário")
-	public List<GrupoModel> lista(
+	public CollectionModel<GrupoModel> lista(
 			@ApiParam(value = "ID do usuário", example = "1", required = true)
 			Long usuarioId);
 	
