@@ -2,6 +2,8 @@ package com.algaworks.algafood.api.openapi.controller;
 
 import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
+
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.FormaPagamentoModel;
 import com.algaworks.algafood.api.model.input.FormaPagamentoInput;
@@ -16,7 +18,7 @@ import io.swagger.annotations.ApiResponses;
 public interface FormaPagamentoOpenApi {
 
 	@ApiOperation("Lista de formas de pagamento")
-	public List<FormaPagamentoModel> listar();
+	public CollectionModel<FormaPagamentoModel> listar();
 	
 	@ApiResponses({ 
 		@ApiResponse(code = 400, message = "ID da forma de pagamento inválido", response = Problem.class),

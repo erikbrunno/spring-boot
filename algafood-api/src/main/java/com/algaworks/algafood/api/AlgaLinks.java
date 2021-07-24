@@ -4,7 +4,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.hateoas.IanaRels;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.TemplateVariable;
 import org.springframework.hateoas.TemplateVariable.VariableType;
@@ -31,7 +30,7 @@ public class AlgaLinks {
 				new TemplateVariable("size", VariableType.REQUEST_PARAM),
 				new TemplateVariable("sort", VariableType.REQUEST_PARAM));
 
-	public Link linkToPedidos() {
+	public Link linkToPedidos(String rel) {
         TemplateVariables filtroVariables = new TemplateVariables(
         		new TemplateVariable("clienteId", VariableType.REQUEST_PARAM),
         		new TemplateVariable("restauranteId", VariableType.REQUEST_PARAM),
@@ -39,7 +38,7 @@ public class AlgaLinks {
         		new TemplateVariable("dataCriacaoFim", VariableType.REQUEST_PARAM));
         
         String pedidosUrl = linkTo(PedidoController.class).toUri().toASCIIString();
-        return new Link(UriTemplate.of(pedidosUrl, PAGE_VARIABLES.concat(filtroVariables)), "pedidos");
+        return new Link(UriTemplate.of(pedidosUrl, PAGE_VARIABLES.concat(filtroVariables)), rel);
 	}
 	
 	public Link linkToRestaurante(Long id) {
@@ -50,8 +49,12 @@ public class AlgaLinks {
 		return linkTo(methodOn(RestauranteController.class).buscar(id)).withRel(rel);
 	}
 	
-	public Link linkToRestaurantes() {
-		return linkTo(methodOn(RestauranteController.class).listar()).withSelfRel();
+	public Link linkToRestaurantes(String rel) {
+		TemplateVariables filtroVariables = new TemplateVariables(
+        		new TemplateVariable("projecao", VariableType.REQUEST_PARAM));
+        
+        String restauranteUrl = linkTo(RestauranteController.class).toUri().toASCIIString();
+        return new Link(UriTemplate.of(restauranteUrl, filtroVariables), rel);
 	}
 	
 	public Link linkToUsuario(Long id) {
@@ -138,9 +141,54 @@ public class AlgaLinks {
 		return linkTo(methodOn(RestauranteResponsavelController.class).listar(restauranteId)).withSelfRel();
 	}
 	
+	public Link linkToRestauranteResponsavelDesassociacao(
+			Long restauranteId, Long usuarioId, String rel) {
+
+		    return linkTo(methodOn(RestauranteResponsavelController.class)
+		            .desassociar(restauranteId, usuarioId)).withRel(rel);
+		}
+
+		public Link linkToRestauranteResponsavelAssociacao(Long restauranteId, String rel) {
+		    return linkTo(methodOn(RestauranteResponsavelController.class)
+		            .associar(restauranteId, null)).withRel(rel);
+		}
+	
 	public Link linkToRestauranteFormasPagamento(Long restauranteId, String rel) {
 	    return linkTo(methodOn(RestauranteFormaPagamentoController.class)
 	            .listar(restauranteId)).withRel(rel);
+	}
+	
+	public Link linkToRestauranteFormaPagamentoDesassociacao(
+			Long restauranteId, Long formaPagamentoId, String rel) {
+		return linkTo(methodOn(RestauranteFormaPagamentoController.class)
+				.desassociar(restauranteId, formaPagamentoId)).withRel(rel);
+	}
+	
+	public Link linkToRestauranteFormaPagamentoAssociacao(
+			Long restauranteId, String rel) {
+		
+		return linkTo(methodOn(RestauranteFormaPagamentoController.class)
+				.associar(restauranteId, null)).withRel(rel);
+	}
+	
+	public Link linkToRestauranteAbertura(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteController.class)
+	            .abrir(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteFechamento(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteController.class)
+	            .fechar(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteInativacao(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteController.class)
+	            .inativar(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteAtivacao(Long restauranteId, String rel) {
+	    return linkTo(methodOn(RestauranteController.class)
+	            .ativar(restauranteId)).withRel(rel);
 	}
 }
 

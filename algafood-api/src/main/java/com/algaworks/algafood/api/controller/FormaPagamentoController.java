@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,8 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.RestController;import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.assembler.FormaPagamentoInputDisassembler;
 import com.algaworks.algafood.api.assembler.FormaPagamentoModelAssembler;
 import com.algaworks.algafood.api.model.FormaPagamentoModel;
@@ -43,7 +43,7 @@ public class FormaPagamentoController implements FormaPagamentoOpenApi {
 	private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
 	
 	@GetMapping
-	public List<FormaPagamentoModel> listar() {
+	public CollectionModel<FormaPagamentoModel> listar() {
 		List<FormaPagamento> formasPagamento = formaPagamentoRepository.findAll();
 		return formaPagamentoModelAssembler.toCollectionModel(formasPagamento);
 	}
