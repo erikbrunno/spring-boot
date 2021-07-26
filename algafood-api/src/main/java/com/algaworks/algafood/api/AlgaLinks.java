@@ -26,6 +26,7 @@ import com.algaworks.algafood.api.controller.RestauranteProdutoController;
 import com.algaworks.algafood.api.controller.RestauranteProdutoFotoController;
 import com.algaworks.algafood.api.controller.RestauranteResponsavelController;
 import com.algaworks.algafood.api.controller.UsuarioController;
+import com.algaworks.algafood.api.controller.UsuarioGrupoController;
 
 @Component
 public class AlgaLinks {
@@ -231,6 +232,18 @@ public class AlgaLinks {
 	
 	public Link linkToPermissoes() {
 		return linkTo(methodOn(PermissaoController.class).listar()).withRel("permissoes");
+	}
+	
+	public Link linkToGruposDoUsuario(Long usuarioId, String rel) {
+		return linkTo(methodOn(UsuarioGrupoController.class).lista(usuarioId)).withRel(rel);
+	}
+	
+	public Link linkToGrupoUsuarioDesassociacao(Long usuarioId, Long grupoId, String rel) {
+		return linkTo(methodOn(UsuarioGrupoController.class).desassociar(usuarioId, grupoId)).withRel(rel);
+	}
+	
+	public Link linkToGrupoUsuarioAssociacao(Long usuarioId, String rel) {
+		return linkTo(methodOn(UsuarioGrupoController.class).associar(usuarioId, null)).withRel(rel);
 	}
 }
 
