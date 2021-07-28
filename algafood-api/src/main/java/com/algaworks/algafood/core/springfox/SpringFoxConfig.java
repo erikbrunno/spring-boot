@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Links;
@@ -22,14 +21,24 @@ import com.algaworks.algafood.api.model.CidadeModel;
 import com.algaworks.algafood.api.model.CozinhaModel;
 import com.algaworks.algafood.api.model.EstadoModel;
 import com.algaworks.algafood.api.model.FormaPagamentoModel;
+import com.algaworks.algafood.api.model.GrupoModel;
 import com.algaworks.algafood.api.model.PedidoResumoModel;
+import com.algaworks.algafood.api.model.PermissaoModel;
+import com.algaworks.algafood.api.model.ProdutoModel;
+import com.algaworks.algafood.api.model.RestauranteModel;
+import com.algaworks.algafood.api.model.UsuarioModel;
 import com.algaworks.algafood.api.openapi.model.CidadesModelOpenApi;
 import com.algaworks.algafood.api.openapi.model.CozinhasModelOpenApi;
 import com.algaworks.algafood.api.openapi.model.EstadosModelOpenApi;
 import com.algaworks.algafood.api.openapi.model.FormasPagamentoModelOpenApi;
+import com.algaworks.algafood.api.openapi.model.GruposModelOpenApi;
 import com.algaworks.algafood.api.openapi.model.LinksModelOpenApi;
 import com.algaworks.algafood.api.openapi.model.PageableModelOpenApi;
 import com.algaworks.algafood.api.openapi.model.PedidosResumoModelOpenApi;
+import com.algaworks.algafood.api.openapi.model.PermissoesModelOpenApi;
+import com.algaworks.algafood.api.openapi.model.ProdutosModelOpenApi;
+import com.algaworks.algafood.api.openapi.model.RestaurantesModelOpenApi;
+import com.algaworks.algafood.api.openapi.model.UsuariosModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
@@ -85,14 +94,29 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	            .alternateTypeRules(
 	            		AlternateTypeRules.newRule(typeResolver.resolve(PagedModel.class, CozinhaModel.class), 
 	            			CozinhasModelOpenApi.class),
-	            		AlternateTypeRules.newRule(typeResolver.resolve(Page.class, PedidoResumoModel.class), 
+	            		AlternateTypeRules.newRule(typeResolver.resolve(PagedModel.class, PedidoResumoModel.class), 
 	            				PedidosResumoModelOpenApi.class),
 	            		AlternateTypeRules.newRule(typeResolver.resolve(CollectionModel.class, CidadeModel.class), 
 	            				CidadesModelOpenApi.class),
 	            		AlternateTypeRules.newRule(typeResolver.resolve(CollectionModel.class, EstadoModel.class), 
 	            				EstadosModelOpenApi.class),
 	            		AlternateTypeRules.newRule(typeResolver.resolve(CollectionModel.class, FormaPagamentoModel.class), 
-	            				FormasPagamentoModelOpenApi.class)
+	            				FormasPagamentoModelOpenApi.class),
+	            		AlternateTypeRules.newRule(
+	    	            	    typeResolver.resolve(CollectionModel.class, GrupoModel.class),
+	    	            	    GruposModelOpenApi.class),
+	            		AlternateTypeRules.newRule(
+		            	        typeResolver.resolve(CollectionModel.class, PermissaoModel.class),
+		            	        PermissoesModelOpenApi.class),
+	            		AlternateTypeRules.newRule(
+	            			    typeResolver.resolve(CollectionModel.class, ProdutoModel.class),
+	            			    ProdutosModelOpenApi.class),
+	            		AlternateTypeRules.newRule(
+	            			    typeResolver.resolve(CollectionModel.class, RestauranteModel.class),
+	            			    RestaurantesModelOpenApi.class),
+	            		AlternateTypeRules.newRule(
+	            		        typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
+	            		        UsuariosModelOpenApi.class)
 	            )
 				.apiInfo(apiInfo())
 				.tags(new Tag("Cidades", "Gerenciar cidades"),
