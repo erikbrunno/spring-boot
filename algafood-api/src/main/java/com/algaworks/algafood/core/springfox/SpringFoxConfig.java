@@ -79,7 +79,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
 				.directModelSubstitute(Links.class, LinksModelOpenApi.class)
 	            .alternateTypeRules(
-	            		AlternateTypeRules.newRule(typeResolver.resolve(Page.class, CozinhaModel.class), 
+	            		AlternateTypeRules.newRule(typeResolver.resolve(PagedModel.class, CozinhaModel.class), 
 	            			CozinhasModelOpenApi.class),
 	            		AlternateTypeRules.newRule(typeResolver.resolve(Page.class, PedidoResumoModel.class), 
 	            				PedidosResumoModelOpenApi.class),
