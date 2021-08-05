@@ -19,8 +19,4 @@ public class WebConfig implements WebMvcConfigurer {
 //			.maxAge(30) Ativa o prefligth para 30 segundos
 	}
 	
-	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		configurer.defaultContentType(AlgaMediaType.V2_APPLICATION_JSON);
-	}
 }
