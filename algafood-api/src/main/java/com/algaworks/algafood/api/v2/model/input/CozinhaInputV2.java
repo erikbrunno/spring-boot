@@ -7,14 +7,13 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-@ApiModel("CidadeInput")
+@ApiModel("CozinhaInput")
 @Getter
 @Setter
-public class CidadeInputV2 {
+public class CozinhaInputV2 {
 
-	@ApiModelProperty(example = "Recife", required = true)
+    @ApiModelProperty(example = "Brasileira", required = true)
 	@NotBlank
-	private String nomeCidade;
+	private String nomeCozinha;
 
-	private Long idEstado;
 }

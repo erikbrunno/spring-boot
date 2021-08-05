@@ -39,10 +39,15 @@ import com.algaworks.algafood.api.v1.openapi.model.PermissoesModelOpenApi;
 import com.algaworks.algafood.api.v1.openapi.model.ProdutosModelOpenApi;
 import com.algaworks.algafood.api.v1.openapi.model.RestaurantesModelOpenApi;
 import com.algaworks.algafood.api.v1.openapi.model.UsuariosModelOpenApi;
+import com.algaworks.algafood.api.v2.model.CidadeModelV2;
+import com.algaworks.algafood.api.v2.model.CozinhaModelV2;
+import com.algaworks.algafood.api.v2.openapi.model.CidadesModelOpenApiV2;
+import com.algaworks.algafood.api.v2.openapi.model.CozinhasModelOpenApiV2;
 import com.fasterxml.classmate.TypeResolver;
 
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseMessageBuilder;
 import springfox.documentation.schema.AlternateTypeRules;
@@ -61,12 +66,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SpringFoxConfig implements WebMvcConfigurer {
 
 	@Bean
-	public Docket apiDocket() {
+	public Docket apiDocketV1() {
 		var typeResolver = new TypeResolver();
 		
 		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("V1")
 				.select()
 					.apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
+					.paths(PathSelectors.ant("/v1/*")) //Pra gerar a documentacao apenas da versao 1 da API algafood
 //					.paths(PathSelectors.ant("/restaurantes/*"))
 					.build()
 				
@@ -118,7 +125,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	            		        typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
 	            		        UsuariosModelOpenApi.class)
 	            )
-				.apiInfo(apiInfo())
+				.apiInfo(apiInfoV1())
 				.tags(new Tag("Cidades", "Gerenciar cidades"),
 						new Tag("Grupos", "Gerenciar grupos"),
 						new Tag("Cozinhas", "Gerenciar cozinhas"),
@@ -130,6 +137,41 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				        new Tag("Usuários", "Gerenciar usuários"),
 				        new Tag("Estatísticas", "Estatísticas da AlgaFood"),
 				        new Tag("Permissões", "Gerencia as permissões"));
+	}
+	
+	@Bean
+	public Docket apiDocketV2() {
+		var typeResolver = new TypeResolver();
+		
+		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("V2")
+				.select()
+					.apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
+					.paths(PathSelectors.ant("/v2/*")) //Pra gerar a documentacao apenas da versao 1 da API algafood
+					.build()
+				
+				//Desabilita o status code da faixa 400 quando for escanear
+				.useDefaultResponseMessages(false)
+				
+				//configura os status globalmente pra cada endpoint, nele informamos quais código e sua descricao
+				.globalResponseMessage(RequestMethod.GET, globalGetResponseMessages())
+				.globalResponseMessage(RequestMethod.POST, globalPostPutResponseMessages())
+	            .globalResponseMessage(RequestMethod.PUT, globalPostPutResponseMessages())
+	            .globalResponseMessage(RequestMethod.DELETE, globalDeleteResponseMessages())
+	            .ignoredParameterTypes(ServletWebRequest.class)
+				.additionalModels(typeResolver.resolve(Problem.class))
+				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+				.directModelSubstitute(Links.class, LinksModelOpenApi.class)
+				.alternateTypeRules(AlternateTypeRules.newRule(
+					    typeResolver.resolve(PagedModel.class, CozinhaModelV2.class),
+					    CozinhasModelOpenApiV2.class))
+
+					.alternateTypeRules(AlternateTypeRules.newRule(
+					        typeResolver.resolve(CollectionModel.class, CidadeModelV2.class),
+					        CidadesModelOpenApiV2.class))
+				.apiInfo(apiInfoV2())
+				.tags(new Tag("Cidades", "Gerenciar cidades"),
+						new Tag("Cozinhas", "Gerenciar cozinhas"));
 	}
 	
 	private List<ResponseMessage> globalGetResponseMessages() {
@@ -186,11 +228,20 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	        );
 	}
 	
-	private ApiInfo apiInfo() {
+	private ApiInfo apiInfoV1() {
 		return new ApiInfoBuilder()
 				.title("Algafood API")
 				.description("API Aberta para clientes e restaurantes")
 				.version("1")
+				.contact(new Contact("Algafood", "http://www.algafood.com.br", "contato@algafood.com.br"))
+				.build();
+	}
+	
+	private ApiInfo apiInfoV2() {
+		return new ApiInfoBuilder()
+				.title("Algafood API")
+				.description("API Aberta para clientes e restaurantes")
+				.version("2")
 				.contact(new Contact("Algafood", "http://www.algafood.com.br", "contato@algafood.com.br"))
 				.build();
 	}
