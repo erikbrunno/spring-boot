@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
 	@Autowired
-	private ApiDeprecatedHandler apiDeprecatedHandler;
+	private ApiRetirementHandler apiDeprecatedHandler;
 	
 	/*
 	 * Habilita o CORS para qualquer origem
