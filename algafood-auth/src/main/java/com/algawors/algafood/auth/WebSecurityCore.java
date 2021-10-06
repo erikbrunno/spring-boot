@@ -29,6 +29,7 @@ public class WebSecurityCore extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 	
+	//Injeta o bean AuthenticationManager
 	@Bean
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {

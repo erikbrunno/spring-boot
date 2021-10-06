@@ -38,6 +38,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	}
 	
+	/*
+	 * Quando usamos o fluxo password precisa do authenticationManager
+	 */
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.authenticationManager(authenticationManager);
