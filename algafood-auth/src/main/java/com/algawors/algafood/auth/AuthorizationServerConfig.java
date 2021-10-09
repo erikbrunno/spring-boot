@@ -38,8 +38,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.withClient("faturamento")
 				.secret(passwordEnconder.encode("faturamento123"))
 				.authorizedGrantTypes("client_credentials")
-				.scopes("write", "read");
-			
+				.scopes("write", "read")
+			.and()
+				.withClient("food-analytics")
+				.secret(passwordEnconder.encode("food123"))
+				.authorizedGrantTypes("authorization_code") //Suporta refresh token
+				.scopes("write", "read")
+				.redirectUris("http://aplicacao-cliente");
 	}
 	
 	@Override
