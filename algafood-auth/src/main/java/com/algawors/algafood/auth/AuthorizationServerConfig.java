@@ -33,7 +33,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.authorizedGrantTypes("password", "refresh_token")
 				.scopes("write", "read")
 				.accessTokenValiditySeconds(6 * 60 * 60) //Expira em 6 horas o access token
-				.refreshTokenValiditySeconds(60 * 24 * 60 * 60); //Expira em 60 dias o refresh token 
+				.refreshTokenValiditySeconds(60 * 24 * 60 * 60) //Expira em 60 dias o refresh token 
+			.and()
+				.withClient("faturamento")
+				.secret(passwordEnconder.encode("faturamento123"))
+				.authorizedGrantTypes("client_credentials")
+				.scopes("write", "read");
+			
 	}
 	
 	@Override
@@ -51,7 +57,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		endpoints
 			.authenticationManager(authenticationManager)
 			.userDetailsService(userDetailsService)
-			.reuseRefreshTokens(false); //Desabilita o reudo do refresh token
+			.reuseRefreshTokens(false); //Desabilita o reuso do refresh token
 	}
 }
 
