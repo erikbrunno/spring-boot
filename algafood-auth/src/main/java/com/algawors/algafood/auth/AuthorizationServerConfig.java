@@ -31,9 +31,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	@Autowired
-	private RedisConnectionFactory redisConnectionFactory;
-	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients
@@ -78,12 +75,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 			.authenticationManager(authenticationManager)
 			.userDetailsService(userDetailsService)
 			.reuseRefreshTokens(false) //Desabilita o reuso do refresh token
-			.tokenStore(redisTokenStore())
 			.tokenGranter(tokenGranter(endpoints));
-	}
-	
-	private TokenStore redisTokenStore() {
-		return new RedisTokenStore(redisConnectionFactory);
 	}
 	
 	private TokenGranter tokenGranter(AuthorizationServerEndpointsConfigurer endpoints) {
