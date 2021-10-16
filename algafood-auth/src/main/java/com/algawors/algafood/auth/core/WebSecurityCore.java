@@ -1,4 +1,4 @@
-package com.algawors.algafood.auth;
+package com.algawors.algafood.auth.core;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

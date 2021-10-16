@@ -1,4 +1,4 @@
-package com.algawors.algafood.auth;
+package com.algawors.algafood.auth.core;
 
 import java.util.Arrays;
 
