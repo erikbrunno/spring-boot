@@ -13,17 +13,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityCore extends WebSecurityConfigurerAdapter {
 
 	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication()
-			.withUser("erik")
-				.password(passwordEncoder().encode("123"))
-				.roles("ADMIN")
-			.and()
-			.withUser("algafood")
-				.password(passwordEncoder().encode("123"))
-				.roles("ADMIN");
-	}
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//		auth.inMemoryAuthentication()
+//			.withUser("erik")
+//				.password(passwordEncoder().encode("123"))
+//				.roles("ADMIN")
+//			.and()
+//			.withUser("algafood")
+//				.password(passwordEncoder().encode("123"))
+//				.roles("ADMIN");
+//	}
+	
+	
 	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -37,9 +39,9 @@ public class WebSecurityCore extends WebSecurityConfigurerAdapter {
 		return super.authenticationManager();
 	}
 	
-	@Bean
-	@Override
-	protected UserDetailsService userDetailsService() {
-		return super.userDetailsService();
-	}
+//	@Bean
+//	@Override
+//	protected UserDetailsService userDetailsService() {
+//		return super.userDetailsService();
+//	}
 }
