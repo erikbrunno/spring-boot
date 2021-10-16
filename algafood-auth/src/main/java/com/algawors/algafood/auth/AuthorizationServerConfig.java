@@ -66,7 +66,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 //		security.checkTokenAccess("isAuthenticated()");
-		security.checkTokenAccess("permitAll()");
+		security.checkTokenAccess("permitAll()") //Habilita o acesso ao endpoint de check_token sem precisar de autenticacao
+			.tokenKeyAccess("permitAll()"); //Habilita o acesso ao endpoint token_key que retorna a chave publica
 
 	}
 	
