@@ -114,7 +114,7 @@ insert into usuario (id, nome, email, senha, data_cadastro) values
 (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '$2a$12$UgZkIytsr3L6LuLhuzzXDOBq6jsV4WesBynJ/sO4V/z9UlVu9IJhK', utc_timestamp);
   
 
-insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
+insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2), (3, 3), (4, 4);
 
 delete from restaurante_usuario_responsavel;
 
