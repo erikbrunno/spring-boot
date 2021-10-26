@@ -31,5 +31,8 @@ public interface RestauranteRepository
 	
 	int countByCozinhaId(Long cozinha);
 	
+	//A consulta esta no arquivo orm.xml
+	boolean existsResponsavel(Long restauranteId, Long usuarioId);
+	
 }
 
