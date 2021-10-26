@@ -41,7 +41,6 @@ public @interface CheckSecurity {
 	    @Retention(RUNTIME)
 	    @Target(METHOD)
 	    public @interface PodeConsultar { }
-	    
 	}
 
 }
