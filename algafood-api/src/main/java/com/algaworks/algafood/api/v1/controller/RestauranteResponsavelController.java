@@ -17,6 +17,7 @@ import com.algaworks.algafood.api.v1.AlgaLinks;
 import com.algaworks.algafood.api.v1.assembler.UsuarioModelAssembler;
 import com.algaworks.algafood.api.v1.model.UsuarioModel;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteResponsavelControllerOpenApi;
+import com.algaworks.algafood.core.security.AlgaSecurity;
 import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
@@ -38,9 +39,11 @@ public class RestauranteResponsavelController implements RestauranteResponsavelC
 	@GetMapping
 	public CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = cadastroRestaurante.buscar(restauranteId);
-		return usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis())
-				.removeLinks()
-				.add(algaLinks.linkToRestauranteResponsavel(restauranteId));
+		CollectionModel<UsuarioModel> usuariosModel = usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis())
+				.removeLinks();
+		usuariosModel.add(algaLinks.linkToRestauranteResponsavel(restauranteId));
+		
+		return usuariosModel;
 	}
 
 	@CheckSecurity.Restaurantes.PodeGerenciarCadastro

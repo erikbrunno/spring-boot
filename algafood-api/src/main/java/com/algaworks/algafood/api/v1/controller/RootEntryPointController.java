@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.api.v1.AlgaLinks;
+import com.algaworks.algafood.core.security.AlgaSecurity;
 
 @RestController
 @RequestMapping(path = "/v1", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -15,27 +16,53 @@ public class RootEntryPointController {
 
 	@Autowired
 	private AlgaLinks algaLinks;
-	
+
+	@Autowired
+	private AlgaSecurity algaSecurity;
+
 	@GetMapping
 	public RootEntryPointModel root() {
 		var rootEntryPointModel = new RootEntryPointModel();
-		
-		rootEntryPointModel.add(algaLinks.linkToCozinhas());
-		rootEntryPointModel.add(algaLinks.linkToPedidos("pedidos"));
-		rootEntryPointModel.add(algaLinks.linkToRestaurantes("restaurantes"));
-		rootEntryPointModel.add(algaLinks.linkToGrupos("grupos"));
-		rootEntryPointModel.add(algaLinks.linkToUsuarios());
-		rootEntryPointModel.add(algaLinks.linkToPermissoes());
-		rootEntryPointModel.add(algaLinks.linkToFormasPagamento());
-		rootEntryPointModel.add(algaLinks.linkToEstados());
-		rootEntryPointModel.add(algaLinks.linkToCidades());
-		rootEntryPointModel.add(algaLinks.linkToEstatisticas("estatisticas"));
-		
+
+		if (algaSecurity.podeConsultarCozinhas()) {
+			rootEntryPointModel.add(algaLinks.linkToCozinhas());
+		}
+
+		if (algaSecurity.podePesquisarPedidos()) {
+			rootEntryPointModel.add(algaLinks.linkToPedidos("pedidos"));
+		}
+
+		if (algaSecurity.podeConsultarRestaurantes()) {
+			rootEntryPointModel.add(algaLinks.linkToRestaurantes("restaurantes"));
+		}
+
+		if (algaSecurity.podeConsultarUsuariosGruposPermissoes()) {
+			rootEntryPointModel.add(algaLinks.linkToGrupos("grupos"));
+			rootEntryPointModel.add(algaLinks.linkToUsuarios());
+			rootEntryPointModel.add(algaLinks.linkToPermissoes());
+		}
+
+		if (algaSecurity.podeConsultarFormasPagamento()) {
+			rootEntryPointModel.add(algaLinks.linkToFormasPagamento());
+		}
+
+		if (algaSecurity.podeConsultarEstados()) {
+			rootEntryPointModel.add(algaLinks.linkToEstados());
+		}
+
+		if (algaSecurity.podeConsultarCidades()) {
+			rootEntryPointModel.add(algaLinks.linkToCidades());
+		}
+
+		if (algaSecurity.podeConsultarEstatisticas()) {
+			rootEntryPointModel.add(algaLinks.linkToEstatisticas("estatisticas"));
+		}
+
 		return rootEntryPointModel;
 	}
-	
+
 	private static class RootEntryPointModel extends RepresentationModel<RootEntryPointModel> {
-		
+
 	}
 
 }
